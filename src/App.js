@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Login from "./components/page-content/Login";
 import Home from "./components/page-content/Home";
 import MainHeader from "./components/main-header/MainHeader";
@@ -6,12 +6,19 @@ import MainHeader from "./components/main-header/MainHeader";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === "1") setIsLoggedIn(true);
+  }, []);
+
   const loginHandler = (email, password) => {
-    // We should of course check email and password, but it's just a dummy/ demo anyways
+    localStorage.setItem("isLoggedIn", "1");
     setIsLoggedIn(true);
   };
 
-  const logoutHandler = () => setIsLoggedIn(false);
+  const logoutHandler = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
 
   return (
     <Fragment>
